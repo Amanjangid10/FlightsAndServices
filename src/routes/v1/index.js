@@ -12,6 +12,3 @@ router.patch('/city/:id', update);
 router.delete('/city/:id', destroy);
 
 module.exports = router;
-
-
-

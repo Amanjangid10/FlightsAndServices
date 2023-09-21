@@ -2,12 +2,15 @@ const { City } = require('../models/index');
 
 class CityRepository {
 
-    async createCity(name) {
+   
+
+    async createCity({ name }) {
         try {
             const city = await City.create({ name })
             return city;
         } catch (error) {
             console.log("There is an issue with repository layer")
+            console.log(error)
             throw (error);
         }
     };
