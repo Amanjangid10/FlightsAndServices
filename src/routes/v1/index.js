@@ -1,7 +1,9 @@
 const express = require('express');
-const { create, get,getAll, update, destroy } = require('../../controllers/city-controller');
+const { create, get, getAll, update, destroy } = require('../../controllers/city-controller');
+// const citycontroller = require('../../controllers/city-controller')
 const router = express.Router();
 
+// we can also use router as :  router.post('/city', citycontroller.create)
 
 router.post('/city', create);
 router.get('/city/:id', get);
