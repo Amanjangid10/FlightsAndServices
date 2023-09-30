@@ -1,9 +1,9 @@
+const { Op } = require('sequelize');
 const { City } = require('../models/index');
 
 class CityRepository {
 
    
-
     async createCity({ name }) {
         try {
             const city = await City.create({ name })
@@ -17,25 +17,35 @@ class CityRepository {
 
     async getCity(cityId) {
         try {
-            const city = await City.findByPK( cityId );
+            const city = await City.findByPk(cityId);
             return city;
         } catch (error) {
-            console.log("There is an issue with repository layer")
-            throw (error);
+            console.log("Something went wrong in the repository layer");
+            throw {error};
         }
-    };
+    }
 
-
-    async getAllCity(name) {
+    async getAllCity(filter) {
         try {
-
+            if (filter.name) {
+                const cities = await City.findAll({
+                    where: {
+                        name: {
+                            [Op.startsWith]: filter.name
+                        }
+                    }
+                });
+                return cities;
+            };
+            const cities = await City.findAll();
+            return cities;
         } catch (error) {
             console.log("There is an issue with repository layer")
             throw (error);
         }
     };
 
-    async updateCity(data, cityId) {
+    async updateCity( cityId, data) {
         try {
             const city = await City.update(data, {
                 where: {
@@ -43,12 +53,18 @@ class CityRepository {
                 }
             });
             return city;
+            // Above approach works well with PG sql in {returning : true} 
+            // For getting updated data in mysql we use below approach:
+            // const city = await City.findByPk(cityId);
+            // city.name = data.name;
+            // console.log(city.name)
+            // await city.save();
+            // return city;
         } catch (error) {
             console.log("There is an issue with repository layer")
             throw (error);
         }
     };
-
 
     async deleteCity(cityId) {
         try {
@@ -66,4 +82,4 @@ class CityRepository {
 
 }
 
-module.exports = CityRepository;
+module.exports = CityRepository; 

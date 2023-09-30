@@ -3,19 +3,18 @@ const { CityServices } = require('../services/index')
 const cityServices = new CityServices()
 
 
-const create = async (req, res) => {
-    try {                       
-
+const create = async(req, res) => {
+    try {
+        console.log(req.body)
         const city = await cityServices.createCity(req.body);
+        console.log(city)
         return res.status(201).json({
             data: city,
             success: true,
             message: "Created succesfully",
             err: {}
-        });       
-    }
-
-    catch (error) {
+        });
+    } catch (error) {
         console.log(error)
         res.status(500).json({
             data: {},
@@ -28,7 +27,7 @@ const create = async (req, res) => {
 
 
 
-const get = async (req, res) => {
+const get = async(req, res) => {
 
     try {
         const city = await cityServices.getCity(req.params.id); //req.params.id is comming from usl /city/:id
@@ -38,9 +37,7 @@ const get = async (req, res) => {
             message: "succesfully retrieved the city ",
             err: {}
         });
-    }
-
-    catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             data: {},
@@ -51,19 +48,17 @@ const get = async (req, res) => {
 
     };
 }
-const getAll = async (req, res) => {
+const getAll = async(req, res) => {
 
     try {
-        const city = await cityServices.getAllCity(req.params); //req.params is comming from usl /city
+        const city = await cityServices.getAllCity(req.querry);//req.params is comming from usl /city
         res.status(201).json({
             data: city,
             success: true,
             message: "succesfully retrieved the city ",
             err: {}
         });
-    }
-
-    catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             data: {},
@@ -76,7 +71,7 @@ const getAll = async (req, res) => {
 }
 
 
-const update = async (req, res) => {
+const update = async(req, res) => {
 
     try {
         const response = await cityServices.updateCity(req.params.id, req.body); //data will be fetched from req.body while updating
@@ -86,9 +81,7 @@ const update = async (req, res) => {
             message: "succesfully updated the city ",
             err: {}
         });
-    }
-
-    catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             data: {},
@@ -102,7 +95,7 @@ const update = async (req, res) => {
 
 
 
-const destroy = async (req, res) => {
+const destroy = async(req, res) => {
 
     try {
         const response = await cityServices.deleteCity(req.params.id); //req.params.id is comming from usl /city/:id
@@ -112,9 +105,7 @@ const destroy = async (req, res) => {
             message: "succesfully deleted the city ",
             err: {}
         });
-    }
-
-    catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             data: {},
@@ -127,3 +118,4 @@ const destroy = async (req, res) => {
 }
 
 module.exports = { create, get, getAll, update, destroy };
+

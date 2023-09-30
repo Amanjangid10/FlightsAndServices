@@ -6,7 +6,7 @@ class CityServices {
 
   constructor() {
     this.cityRepository = new CityRepository();
-}
+  }
 
 
   async createCity(data) {
@@ -23,18 +23,18 @@ class CityServices {
 
   async getCity(cityId) {
     try {
-      const city = await this.cityRepository.getCity(cityId);
-      return city;
+        const city = await this.cityRepository.getCity(cityId);
+        return city;
     } catch (error) {
-      console.log('Something is wrong with service layer');
-      throw (error);
+        console.log("Something went wrong at service layer");
+        throw {error};
     }
-  }
+}
 
-  async getAllCity(name) {
+  async getAllCity(filter) {
     try {
-      const city = await this.cityRepository.getAllCity(name);
-      return city;
+      const cities = await this.cityRepository.getAllCity({name : filter.name});
+      return cities;
     } catch (error) {
       console.log('Something is wrong with service layer');
       throw (error);
